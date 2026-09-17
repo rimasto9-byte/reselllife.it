@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Palette "Schermo reale" ── */
+  --color-notte: #090909;
+  --color-superficie: #141414;
+  --color-bordo: #262626;
+  --color-viola: #7B2FD6;
+  --color-viola-hover: #964DF4;
+  --color-accento: #FF1FA8;
+  --color-accento-hover: #FF47B9;
+  --color-testo: #ffffff;
+  --color-muted: rgba(255, 255, 255, 0.5);
+
+  /* ── Typography ── */
+  --font-anton: "Anton", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  /* ── Spacing scale (unchanged from Tailwind defaults) ── */
+
+  /* ── Radius ── */
+  --radius-card: 12px;
+  --radius-card-lg: 16px;
+  --radius-btn: 8px;
+}
+
+/* ── Base reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #090909;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ── Focus visible — keyboard nav ── */
+:focus-visible {
+  outline: 2px solid #7B2FD6;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Hero animation — single orchestrated moment ── */
+@keyframes heroWord {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-animate-h1 {
+  animation: heroWord 0.3s ease-out 0s both;
+}
+.hero-animate-sub {
+  animation: heroWord 0.3s ease-out 0.25s both;
+}
+.hero-animate-cta {
+  animation: heroWord 0.3s ease-out 0.45s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-animate-h1,
+  .hero-animate-sub,
+  .hero-animate-cta {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── FAQ accordion smooth open ── */
+details[open] > .faq-body {
+  animation: heroWord 0.2s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  details[open] > .faq-body {
+    animation: none;
+  }
+}
+
+/* ── Scrollbar (Webkit) ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #090909;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 3px;
+}
+
+/* ── Carousel swipe on mobile ── */
+.carousel-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+}
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+.carousel-slide {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}
