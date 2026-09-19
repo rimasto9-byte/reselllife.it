@@ -32,7 +32,8 @@ export type AnalyticsEvent =
   | "academy_click"
   | "fornitore_click"
   | "whatsapp_click"
-  | "faq_open";
+  | "faq_open"
+  | "testimonial_open";
 
 export function trackEvent(
   event: AnalyticsEvent,

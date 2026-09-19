@@ -5,7 +5,6 @@ import Hero from "@/components/Hero";
 import Metodo from "@/components/Metodo";
 import Ecosistema from "@/components/Ecosistema";
 import BotSection from "@/components/BotSection";
-import ProvaSociale from "@/components/ProvaSociale";
 import VipSection from "@/components/VipSection";
 import Scelta from "@/components/Scelta";
 import Bonus from "@/components/Bonus";
@@ -103,9 +102,6 @@ export default function HomePage() {
 
         {/* 4 — Bot */}
         <BotSection />
-
-        {/* 5 — Prova sociale */}
-        <ProvaSociale />
 
         {/* 5.5 — VIP */}
         <VipSection />

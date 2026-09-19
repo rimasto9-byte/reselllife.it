@@ -34,7 +34,12 @@ export const FORM_ENDPOINT = get(
 
 export const CALENDLY_URL = get(
   "NEXT_PUBLIC_CALENDLY_URL",
-  "https://calendly.com/resellifeacademy"
+  "https://calendly.com/resellifeacademy/30min"
+);
+
+export const COACHING_APPLY_URL = get(
+  "NEXT_PUBLIC_COACHING_APPLY_URL",
+  "https://tally.so/r/Xx7jqO"
 );
 
 // ── Canonical external links ──
