@@ -48,6 +48,11 @@ export const WHATSAPP_URL =
 export const FORNITORI_URL = "/fornitori";
 export const INSTAGRAM_URL = "https://www.instagram.com/resellife_/";
 export const TIKTOK_URL = "https://www.tiktok.com/@_resellife._";
+// Quiz — sostituire con URL proprietario quando pronto
+export const QUIZ_URL = get(
+  "NEXT_PUBLIC_QUIZ_URL",
+  "https://tally.so/r/81Je8o"
+);
 
 // ── Analytics (empty string = disabled) ──
 export const GA4_ID = get("NEXT_PUBLIC_GA4_ID");

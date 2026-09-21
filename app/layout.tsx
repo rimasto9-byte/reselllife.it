@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Anton, Inter } from "next/font/google";
+import { Anton, Poppins } from "next/font/google";
 import "./globals.css";
 import { SITE_URL } from "@/lib/config";
 import CookieBanner from "@/components/CookieBanner";
-import MobileStickyCTA from "@/components/MobileStickyCTA";
+
 
 // ── Fonts autohosted — zero runtime requests to Google ──
 const anton = Anton({
@@ -13,9 +13,10 @@ const anton = Anton({
   display: "swap",
 });
 
-const inter = Inter({
+const poppins = Poppins({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-poppins",
   display: "swap",
 });
 
@@ -65,14 +66,14 @@ export default function RootLayout({
   return (
     <html
       lang="it"
-      className={`${anton.variable} ${inter.variable}`}
+      className={`${anton.variable} ${poppins.variable}`}
     >
-      <body className="bg-notte text-testo font-inter antialiased">
+      <body className="bg-notte text-testo font-poppins antialiased">
         {children}
         {/* Cookie banner — renders on client, fires no pixels before consent */}
         <CookieBanner />
         {/* Mobile sticky CTA — appears after scrolling past hero */}
-        <MobileStickyCTA />
+
       </body>
     </html>
   );

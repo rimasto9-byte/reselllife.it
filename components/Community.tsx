@@ -8,7 +8,7 @@ export default function Community() {
     <section
       id="community"
       aria-labelledby="community-heading"
-      className="py-20 lg:py-28 bg-notte relative overflow-hidden"
+      className="py-16 lg:py-28 bg-notte relative overflow-hidden"
     >
       {/* Background accent */}
       <div

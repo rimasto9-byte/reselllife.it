@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
+import { CheckCircle2 } from "lucide-react";
 
 interface LeadFormProps {
   id?: string;
@@ -99,7 +100,9 @@ export default function LeadForm({
         role="alert"
         aria-live="polite"
       >
-        <div className="text-4xl mb-4">✓</div>
+        <div className="flex items-center justify-center w-14 h-14 rounded-full bg-viola/15 border border-viola/30 mx-auto mb-4">
+          <CheckCircle2 className="w-7 h-7 text-viola" strokeWidth={1.75} />
+        </div>
         <h3 className="font-anton text-2xl uppercase text-accento mb-3">
           Guida inviata!
         </h3>

@@ -2,12 +2,18 @@ export default function Bonus() {
   const steps = [
     {
       n: "1",
-      text: "Ti registri sulle piattaforme indicate nella guida interna",
+      title: "Registrazione",
+      text: "Ti registri sulle piattaforme indicate nella guida interna all'Academy.",
     },
-    { n: "2", text: "Richiedi i bonus di benvenuto disponibili" },
+    {
+      n: "2",
+      title: "Riscatto",
+      text: "Riscatti i bonus di benvenuto disponibili seguendo le istruzioni.",
+    },
     {
       n: "3",
-      text: "Recuperi, in tutto o in parte, la quota d'iscrizione",
+      title: "Recupero",
+      text: "Recuperi l'investimento dell'Academy, in tutto o in parte, in pochi giorni.",
     },
   ];
 
@@ -15,44 +21,62 @@ export default function Bonus() {
     <section
       id="bonus"
       aria-labelledby="bonus-heading"
-      className="py-20 lg:py-28 bg-superficie"
+      className="py-16 lg:py-28 bg-notte relative overflow-hidden"
     >
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2
-          id="bonus-heading"
-          className="font-anton text-[clamp(1.8rem,4vw,3rem)] uppercase text-testo mb-5 leading-none"
-        >
-          RIENTRA DELLA QUOTA
-          <br />
-          <span className="text-viola">CON I BONUS DI BENVENUTO</span>
-        </h2>
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-b from-notte via-[#100625] to-notte pointer-events-none"
+      />
 
-        <p className="text-testo/65 leading-relaxed mb-10">
-          Non vogliamo che il costo dell&apos;Academy sia l&apos;ostacolo.
-          Appena entri, trovi una guida dedicata per richiedere i bonus di
-          benvenuto delle piattaforme segnalate.
-        </p>
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <p className="text-viola font-poppins font-semibold text-sm uppercase tracking-[0.2em] mb-3">
+            Incluso nell&apos;Academy
+          </p>
+          <h2
+            id="bonus-heading"
+            className="font-anton text-[clamp(1.8rem,4vw,3rem)] uppercase text-testo leading-none mb-4"
+          >
+            L&apos;ACADEMY NON FINISCE
+            <br />
+            <span className="text-viola">CON L&apos;ISCRIZIONE.</span>
+          </h2>
+          <p className="text-muted/70 font-poppins max-w-xl mx-auto leading-relaxed">
+            <strong className="text-testo/80 font-semibold">BONUS DI BENVENUTO</strong>
+            {" "}— appena entri, trovi una guida dedicata per richiedere i bonus
+            di benvenuto delle piattaforme segnalate.
+          </p>
+        </div>
 
-        <div className="space-y-5 mb-10">
+        {/* Steps — elegant horizontal layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           {steps.map((step) => (
-            <div key={step.n} className="flex items-start gap-4">
-              <div className="w-9 h-9 rounded-full bg-viola/15 border border-viola/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="font-anton text-base text-viola leading-none">
+            <div
+              key={step.n}
+              className="bg-superficie border border-bordo rounded-card-lg p-6 text-center hover:border-viola/30 transition-colors duration-200"
+            >
+              <div className="w-12 h-12 rounded-full bg-viola/15 border border-viola/30 flex items-center justify-center mx-auto mb-4">
+                <span className="font-anton text-xl text-viola leading-none">
                   {step.n}
                 </span>
               </div>
-              <p className="text-testo/80 leading-relaxed pt-1.5">{step.text}</p>
+              <h3 className="font-poppins font-semibold text-testo text-sm mb-2">
+                {step.title}
+              </h3>
+              <p className="text-muted/60 text-xs font-poppins leading-relaxed">
+                {step.text}
+              </p>
             </div>
           ))}
         </div>
 
-        {/* Legal note — same text size, not tiny gray fine print */}
-        <div className="bg-notte border border-bordo rounded-card p-5">
-          <p className="text-sm text-testo/55 leading-relaxed">
-            Le piattaforme e gli importi cambiano nel tempo e vengono
-            aggiornati all&apos;interno dell&apos;Academy. I bonus sono erogati
-            da soggetti terzi secondo le loro condizioni: per accedervi serve
-            avere <strong className="text-testo/70">18 anni compiuti</strong>.
+        {/* Legal note */}
+        <div className="bg-superficie/50 border border-bordo rounded-card p-5">
+          <p className="text-sm text-testo/50 leading-relaxed font-poppins text-center">
+            Le piattaforme e gli importi cambiano nel tempo e vengono aggiornati
+            all&apos;interno dell&apos;Academy. I bonus sono erogati da soggetti
+            terzi secondo le loro condizioni:{" "}
+            <strong className="text-testo/65">per accedervi serve avere 18 anni compiuti</strong>.
             I link segnalati possono essere link di affiliazione.
           </p>
         </div>

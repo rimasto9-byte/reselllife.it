@@ -212,7 +212,7 @@ export default function ProvaSociale() {
   }, [activeStory]);
 
   return (
-    <section id="risultati" aria-labelledby="risultati-heading" className="py-20 lg:py-28 bg-superficie">
+    <section id="risultati" aria-labelledby="risultati-heading" className="py-16 lg:py-28 bg-superficie">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 id="risultati-heading" className="font-anton text-[clamp(1.8rem,4vw,3rem)] uppercase text-center text-testo mb-4">
           COSA DICONO DI NOI
@@ -269,11 +269,12 @@ export default function ProvaSociale() {
           role="dialog"
           aria-modal="true"
           aria-label="Visualizzatore testimonianze"
-          className="fixed inset-0 z-[90] bg-notte flex flex-col sm:items-center sm:justify-center overflow-hidden"
+          className="fixed inset-0 z-[90] bg-black/90 flex items-center justify-center overflow-hidden"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="relative w-full h-full sm:max-h-[90vh] sm:aspect-[9/16] sm:rounded-2xl overflow-hidden bg-black flex flex-col">
+          {/* Container: mobile = full screen; desktop = centered 9:16 pillar */}
+          <div className="relative w-full h-full sm:w-[calc(95vh*(9/16))] sm:h-[95vh] sm:rounded-2xl overflow-hidden bg-black flex flex-col">
             <div className="absolute top-0 inset-x-0 z-20 flex gap-1 px-2 pt-2 sm:pt-4">
               {stories.map((s, i) => {
                 let width = "0%";
@@ -327,7 +328,7 @@ export default function ProvaSociale() {
                 ref={videoRef}
                 src="/videos/dicono/dicono-di-noi.mp4"
                 poster="/videos/dicono/dicono-di-noi-poster.jpg"
-                className="w-full h-full object-contain pointer-events-none"
+                className="w-full h-full object-cover pointer-events-none"
                 playsInline
                 preload="metadata"
                 muted={isMuted}

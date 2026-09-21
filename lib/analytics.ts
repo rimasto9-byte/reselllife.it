@@ -26,14 +26,24 @@ function hasConsent(): boolean {
 export type AnalyticsEvent =
   | "view_hero"
   | "cta_guida_click"
+  | "cta_quiz_hero"
+  | "cta_academy_hero"
   | "form_start"
   | "form_submit"
   | "form_success"
   | "academy_click"
+  | "academy_click_nav"
   | "fornitore_click"
+  | "fornitori_section_cta"
   | "whatsapp_click"
   | "faq_open"
-  | "testimonial_open";
+  | "testimonial_open"
+  | "quiz_click_nav"
+  | "quiz_click_nav_mobile"
+  | "quiz_click_section"
+  | "quiz_click_finale"
+  | "call_click"
+  | "bot_notification_click";
 
 export function trackEvent(
   event: AnalyticsEvent,
