@@ -50,14 +50,11 @@ export default function FAQ() {
     >
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <p className="text-viola font-poppins font-semibold text-sm uppercase tracking-[0.2em] mb-3">
-            FAQ
-          </p>
           <h2
             id="faq-heading"
-            className="font-anton text-[clamp(1.8rem,4vw,3rem)] uppercase text-testo"
+            className="font-anton text-[clamp(2.5rem,6vw,4rem)] uppercase text-testo"
           >
-            DOMANDE FREQUENTI
+            DOMANDE?
           </h2>
         </div>
 

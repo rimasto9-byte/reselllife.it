@@ -1,8 +1,19 @@
 import Link from "next/link";
 import { INSTAGRAM_URL, TIKTOK_URL, WHATSAPP_URL, ACADEMY_URL, QUIZ_URL } from "@/lib/config";
 
+// FooterLogo — text-based until /public/logo.png is added from Drive
+// When ready: extract to FooterLogoClient.tsx with "use client" and use next/image with onError fallback
+function FooterLogo() {
+  return (
+    <p className="font-anton text-2xl uppercase text-testo">
+      Resellife <span className="text-viola">Academy</span>
+    </p>
+  );
+}
+
 export default function Footer() {
   const year = new Date().getFullYear();
+
 
   return (
     <footer
@@ -13,14 +24,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
           {/* Brand */}
           <div>
-            {/* Logo placeholder — sostituire con <Image> del logo reale da Drive */}
-            <p className="font-anton text-2xl uppercase text-testo mb-1">
-              Resellife <span className="text-viola">Academy</span>
-            </p>
-            <p className="text-[10px] text-testo/20 font-poppins italic mb-3">
-              ⚠️ Sostituire con logo SVG/PNG reale (Drive)
-            </p>
-            <p className="text-sm text-muted/55 font-poppins leading-relaxed max-w-xs">
+            {/* Logo — replace /public/logo.png with real asset from Drive */}
+            <FooterLogo />
+            <p className="text-sm text-muted/55 font-poppins leading-relaxed max-w-xs mt-3">
               RESELLIFE ACADEMY — Il metodo, gli strumenti e il supporto per
               iniziare nel reselling.
             </p>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ACADEMY_URL, QUIZ_URL } from "@/lib/config";
 import { trackEvent } from "@/lib/analytics";
@@ -9,11 +10,15 @@ interface NavbarProps {
   academyUrl: string;
 }
 
+// Logo: /public/logo.png (replace with real asset from Drive)
+const LOGO_SRC = "/logo.png";
+
 export default function Navbar({ academyUrl }: NavbarProps) {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled]         = useState(false);
+  const [logoError, setLogoError]       = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -22,34 +27,49 @@ export default function Navbar({ academyUrl }: NavbarProps) {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-notte/95 backdrop-blur-md border-b border-bordo/60 shadow-[0_4px_24px_rgba(0,0,0,0.4)]"
-          : "bg-transparent border-b border-transparent"
+          ? "bg-notte/95 backdrop-blur-md border-b border-bordo/60 shadow-[0_4px_24px_rgba(0,0,0,0.4)] h-14"
+          : "bg-transparent border-b border-transparent h-16"
       }`}
       aria-label="Navigazione principale"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo / brand */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+
+        {/* ── Logo / brand ── */}
         <Link
           href="/"
-          className="font-anton text-xl uppercase text-testo tracking-wide hover:text-viola transition-colors duration-200"
+          className="flex items-center gap-2 hover:opacity-90 transition-opacity duration-200"
           aria-label="Resellife Academy — homepage"
         >
-          Resellife <span className="text-viola">Academy</span>
+          {!logoError ? (
+            <Image
+              src={LOGO_SRC}
+              alt="Resellife Academy"
+              width={120}
+              height={32}
+              className="h-8 w-auto object-contain"
+              onError={() => setLogoError(true)}
+              priority
+            />
+          ) : (
+            <span className="font-anton text-xl uppercase text-testo tracking-wide">
+              Resellife <span className="text-viola">Academy</span>
+            </span>
+          )}
         </Link>
 
-        {/* Desktop nav links */}
+        {/* ── Desktop nav links ── */}
         <div className="hidden md:flex items-center gap-6 text-sm text-testo/60">
-          <Link
-            href="#metodo"
-            className="hover:text-testo transition-colors duration-150"
-          >
-            Come funziona
+          <Link href="#metodo" className="hover:text-testo transition-colors duration-150">
+            Metodo
           </Link>
-          <Link
-            href="#bot"
-            className="hover:text-testo transition-colors duration-150"
-          >
+          <Link href="#ecosistema" className="hover:text-testo transition-colors duration-150">
+            Academy
+          </Link>
+          <Link href="#bot" className="hover:text-testo transition-colors duration-150">
             Bot
+          </Link>
+          <Link href="#fornitori" className="hover:text-testo transition-colors duration-150">
+            Fornitori
           </Link>
           <a
             href={QUIZ_URL}
@@ -60,12 +80,6 @@ export default function Navbar({ academyUrl }: NavbarProps) {
           >
             Quiz
           </a>
-          <Link
-            href="#faq"
-            className="hover:text-testo transition-colors duration-150"
-          >
-            FAQ
-          </Link>
           <a
             href={academyUrl}
             onClick={() => trackEvent("academy_click_nav")}
@@ -76,7 +90,7 @@ export default function Navbar({ academyUrl }: NavbarProps) {
           </a>
         </div>
 
-        {/* Mobile: quiz CTA */}
+        {/* ── Mobile: quiz CTA ── */}
         <a
           href={QUIZ_URL}
           target="_blank"

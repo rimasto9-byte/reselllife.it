@@ -43,7 +43,14 @@ export type AnalyticsEvent =
   | "quiz_click_section"
   | "quiz_click_finale"
   | "call_click"
-  | "bot_notification_click";
+  | "bot_notification_click"
+  | "bot_panel_click"
+  | "bonus_wheel_notif_shown"
+  | "bonus_wheel_opened"
+  | "bonus_wheel_spin"
+  | "bonus_wheel_submitted"
+  | "bonus_exit_intent_shown"
+  | "exit_intent_submitted";
 
 export function trackEvent(
   event: AnalyticsEvent,

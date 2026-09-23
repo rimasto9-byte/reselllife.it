@@ -15,6 +15,7 @@ import CallSection from "@/components/CallSection";
 import Bonus from "@/components/Bonus";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
+import BonusWheel from "@/components/BonusWheel";
 import { ACADEMY_URL } from "@/lib/config";
 
 export const metadata: Metadata = {
@@ -182,6 +183,9 @@ export default function HomePage() {
 
       {/* 15 — Footer */}
       <Footer />
+
+      {/* Bonus Wheel — global overlay, sessionStorage-gated */}
+      <BonusWheel />
     </>
   );
 }

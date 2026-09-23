@@ -85,9 +85,6 @@ export default function FornitoriSection() {
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-[10px] text-testo/20 font-poppins italic text-center">
-                ⚠️ Aggiungere grafiche reali dei bundle (Drive: BUNDLE FORNITORI)
-              </p>
             </div>
           </div>
 

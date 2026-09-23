@@ -2,55 +2,63 @@
 
 import { SHOW_BOT_SECTION } from "@/lib/config";
 import { trackEvent } from "@/lib/analytics";
-import { AlertCircle, TrendingDown, CheckCircle2, Bot } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+
+// Animated status sequence: SCAN → FOUND → ALERT → BUY?
+const STATUS_STATES = [
+  { label: "SCAN", color: "text-muted/70", dot: "bg-muted/40" },
+  { label: "FOUND", color: "text-viola",   dot: "bg-viola"    },
+  { label: "ALERT", color: "text-accento", dot: "bg-accento"  },
+  { label: "BUY?",  color: "text-emerald-400", dot: "bg-emerald-400" },
+];
+
+const FLOW = ["TROVA", "VALUTA", "ACQUISTA", "RIVENDI"];
 
 export default function BotSection() {
   if (!SHOW_BOT_SECTION) return null;
 
-  const alerts = [
-    {
-      type: "ERRORI DI PREZZO",
-      Icon: AlertCircle,
-      iconClass: "text-red-400",
-      bgClass: "bg-red-500/10",
-      example: "Giacca marca X pubblicata a 3,99€ — valore medio: 45€",
-      desc: "Il Bot identifica errori umani nella quotazione: chi pubblica non sa il valore reale del capo.",
-    },
-    {
-      type: "ANNUNCI SOTTOPREZZATI",
-      Icon: TrendingDown,
-      iconClass: "text-viola",
-      bgClass: "bg-viola/10",
-      example: "Sneaker premium a -75% rispetto al prezzo medio di mercato",
-      desc: "Occasioni dove il venditore ha fretta e accetta un margine ridotto.",
-    },
-    {
-      type: "OPPORTUNITÀ DA VALUTARE",
-      Icon: CheckCircle2,
-      iconClass: "text-emerald-400",
-      bgClass: "bg-emerald-500/10",
-      example: "Capo di stagione a -85% — 48h di visibilità residua",
-      desc: "Alert tempestivi su prodotti con alta probabilità di rivendita rapida.",
-    },
-  ];
+  return <BotSectionInner />;
+}
 
-  // Notification icons for the demo panel
-  const notifIcons = [
-    { Icon: AlertCircle, cls: "text-red-400" },
-    { Icon: TrendingDown, cls: "text-viola" },
-    { Icon: CheckCircle2, cls: "text-emerald-400" },
-  ];
+function BotSectionInner() {
+  const [statusIdx, setStatusIdx] = useState(0);
+  const [flowActive, setFlowActive] = useState(-1);
+  const sectionRef = useRef<HTMLElement>(null);
+  const animating = useRef(false);
 
-  const notifications = [
-    { time: "14:23", msg: "Errore di prezzo — giacca marca X a 3,99€", badge: "URGENTE" },
-    { time: "14:31", msg: "Sneaker premium lista a -75% valore medio", badge: "OCCASIONE" },
-    { time: "14:47", msg: "Alert capo stagione: -85% · 48h rimaste", badge: "VALUTA" },
-  ];
+  // Animate status when section enters viewport
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !animating.current) {
+          animating.current = true;
+          // Cycle through status states
+          let i = 0;
+          const cycleStatus = () => {
+            setStatusIdx(i);
+            i = (i + 1) % STATUS_STATES.length;
+            setTimeout(cycleStatus, 850);
+          };
+          cycleStatus();
+          // Animate flow steps
+          FLOW.forEach((_, idx) => {
+            setTimeout(() => setFlowActive(idx), idx * 600 + 1200);
+          });
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
-  const flow = ["TROVA", "VALUTA", "ACQUISTA", "RIVENDI"];
+  const currentStatus = STATUS_STATES[statusIdx];
 
   return (
     <section
+      ref={sectionRef}
       id="bot"
       aria-labelledby="bot-heading"
       className="py-16 lg:py-28 bg-superficie relative overflow-hidden"
@@ -65,6 +73,7 @@ export default function BotSection() {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <div className="text-center mb-14">
           <p className="text-viola font-poppins font-semibold text-sm uppercase tracking-[0.2em] mb-3">
             Lo strumento
@@ -84,100 +93,149 @@ export default function BotSection() {
           </p>
         </div>
 
-        {/* Two-column layout */}
+        {/* ── Two column: animated status + description ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start mb-16">
-          {/* Left: bot demo panel */}
+
+          {/* Left: Animated status display */}
           <div className="relative">
-            <div className="bg-notte border border-viola/20 rounded-2xl overflow-hidden shadow-[0_0_60px_rgba(123,47,214,0.2)]">
-              {/* Mac-style header bar */}
+            {/* Status panel — real video/screenshot goes here */}
+            <div className="bg-notte border border-viola/25 rounded-2xl overflow-hidden shadow-[0_0_60px_rgba(123,47,214,0.2)]">
+              {/* Mac-style bar */}
               <div className="flex items-center gap-2 px-4 py-3 border-b border-bordo bg-superficie/50">
                 <div className="w-3 h-3 rounded-full bg-testo/15" />
                 <div className="w-3 h-3 rounded-full bg-testo/15" />
                 <div className="w-3 h-3 rounded-full bg-testo/15" />
-                <div className="flex items-center gap-1.5 ml-2">
-                  <Bot className="w-3.5 h-3.5 text-viola" strokeWidth={1.75} />
-                  <span className="text-xs text-muted/50 font-poppins">Bot Resellife — Live</span>
+                <span className="text-xs text-muted/50 font-poppins ml-2">Bot Resellife</span>
+                {/* Live status badge */}
+                <div className="ml-auto flex items-center gap-1.5">
+                  <span className={`w-2 h-2 rounded-full ${currentStatus.dot} transition-colors duration-300`} />
+                  <span className={`text-xs font-poppins font-bold tracking-widest ${currentStatus.color} transition-colors duration-300`}>
+                    {currentStatus.label}
+                  </span>
                 </div>
               </div>
-              {/* Notifications */}
-              <div className="p-5 space-y-3">
-                {notifications.map((n, i) => {
-                  const { Icon, cls } = notifIcons[i];
-                  return (
-                    <div
-                      key={i}
-                      className="flex items-start gap-3 bg-superficie border border-bordo rounded-xl p-3 hover:border-viola/30 transition-colors duration-200 cursor-default"
-                      onClick={() => trackEvent("bot_notification_click", { index: i })}
-                    >
-                      <div className="flex-shrink-0 mt-0.5">
-                        <Icon className={`w-5 h-5 ${cls}`} strokeWidth={2} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-semibold text-testo">Bot Resellife</span>
-                          <span className="text-xs text-testo/30">{n.time}</span>
-                        </div>
-                        <p className="text-xs text-muted/70 leading-snug font-poppins">{n.msg}</p>
-                        <span className="mt-1.5 inline-block text-[10px] font-poppins font-semibold bg-viola/15 text-viola rounded-full px-2 py-0.5">
-                          {n.badge}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-                <p className="text-[10px] text-testo/20 text-center font-poppins italic pt-1">
-                  ⚠️ Esempi illustrativi — sostituire con screenshot reali (Drive)
-                </p>
+
+              {/* 
+                REAL VIDEO: replace the placeholder box below with:
+                <video
+                  className="w-full aspect-video object-cover"
+                  src="/videos/bot-demo.mp4"
+                  autoPlay muted loop playsInline
+                />
+                and the screenshot with:
+                <Image src="/images/bot-screenshot.png" alt="Screenshot Bot Resellife" width={600} height={400} className="w-full" />
+              */}
+              <div className="aspect-video bg-gradient-to-br from-[#1a0835] to-notte flex items-center justify-center">
+                <div className="text-center p-6">
+                  <div className={`text-4xl font-anton mb-2 transition-all duration-300 ${currentStatus.color}`}>
+                    {currentStatus.label}
+                  </div>
+                  <p className="text-xs text-muted/40 font-poppins">
+                    Video reale del Bot in arrivo (Drive: VIDEO BOT)
+                  </p>
+                  <p className="text-[10px] text-testo/20 font-poppins mt-1">
+                    Sostituire con video mp4 + screenshot reali
+                  </p>
+                </div>
+              </div>
+
+              {/* Alert types list */}
+              <div
+                className="p-4 space-y-2"
+                onClick={() => trackEvent("bot_panel_click")}
+              >
+                {[
+                  { badge: "URGENTE",   msg: "Errore di prezzo — prodotto pubblicato a -90% del valore", color: "bg-red-500/15 text-red-400 border-red-500/30" },
+                  { badge: "OCCASIONE", msg: "Sneaker premium a -75% rispetto al prezzo medio",          color: "bg-viola/15 text-viola border-viola/30" },
+                  { badge: "VALUTA",    msg: "Capo stagione -85% · finestra di 48h",                     color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
+                ].map((n, i) => (
+                  <div
+                    key={i}
+                    className="flex items-start gap-3 bg-superficie border border-bordo rounded-xl p-3 hover:border-viola/30 transition-colors duration-200 cursor-default"
+                  >
+                    <span className={`flex-shrink-0 text-[10px] font-poppins font-bold border rounded-full px-2 py-0.5 mt-0.5 ${n.color}`}>
+                      {n.badge}
+                    </span>
+                    <p className="text-xs text-muted/70 leading-snug font-poppins">{n.msg}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Right: alert types */}
-          <div className="space-y-5">
-            {alerts.map((a, i) => (
+          {/* Right: What the bot does */}
+          <div className="space-y-6">
+            {[
+              {
+                title: "ERRORI DI PREZZO",
+                color: "border-red-500/25 bg-red-500/8",
+                icon: "text-red-400",
+                body: "Chi pubblica non conosce il valore reale del capo. Il Bot intercetta questi errori prima che vengano corretti.",
+                example: "Giacca da 45€ pubblicata a 3,99€",
+              },
+              {
+                title: "ANNUNCI SOTTOPREZZATI",
+                color: "border-viola/30 bg-viola/8",
+                icon: "text-viola",
+                body: "Occasioni dove il venditore ha fretta e accetta un margine ridotto. Margini alti, tempi brevi.",
+                example: "Sneaker premium a -75% del prezzo medio",
+              },
+              {
+                title: "OPPORTUNITÀ DA VALUTARE",
+                color: "border-emerald-500/25 bg-emerald-500/8",
+                icon: "text-emerald-400",
+                body: "Alert tempestivi su prodotti ad alta probabilità di rivendita rapida — prima che la visibilità scada.",
+                example: "Capo stagione -85% · 48h di visibilità",
+              },
+            ].map((a, i) => (
               <div
                 key={i}
-                className="bg-notte border border-bordo rounded-card-lg p-5 hover:border-viola/30 transition-colors duration-200"
+                className={`border ${a.color} rounded-card-lg p-5 hover:border-opacity-70 transition-colors duration-200`}
               >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`w-9 h-9 rounded-xl ${a.bgClass} flex items-center justify-center flex-shrink-0`}>
-                    <a.Icon className={`w-5 h-5 ${a.iconClass}`} strokeWidth={2} />
-                  </div>
-                  <h3 className="font-anton text-base uppercase text-testo tracking-wide">
-                    {a.type}
-                  </h3>
-                </div>
-                <p className="text-xs text-viola/80 font-poppins font-medium mb-2 bg-viola/10 rounded-lg px-3 py-1.5">
+                <h3 className={`font-anton text-base uppercase mb-2 tracking-wide ${a.icon}`}>
+                  {a.title}
+                </h3>
+                <p className="text-sm text-muted/65 font-poppins leading-relaxed mb-2">{a.body}</p>
+                <p className={`text-xs font-poppins font-medium ${a.icon} opacity-80 bg-notte/60 rounded-lg px-3 py-1.5 inline-block`}>
                   Es: {a.example}
-                </p>
-                <p className="text-sm text-muted/65 font-poppins leading-relaxed">
-                  {a.desc}
                 </p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Flow diagram */}
+        {/* ── Animated flow diagram ── */}
         <div className="border-t border-bordo pt-12">
           <p className="text-center text-xs font-poppins font-semibold uppercase tracking-[0.2em] text-muted/40 mb-8">
             Il flusso operativo
           </p>
           <div className="flex flex-wrap justify-center items-center gap-4">
-            {flow.map((step, i) => (
+            {FLOW.map((step, i) => (
               <div key={step} className="flex items-center gap-4">
                 <div className="flex flex-col items-center">
-                  <div className="w-14 h-14 rounded-full bg-viola/15 border border-viola/30 flex items-center justify-center shadow-lg shadow-viola/10 hover:bg-viola/25 transition-colors duration-200">
-                    <span className="font-anton text-sm text-viola">{i + 1}</span>
+                  <div
+                    className={`w-14 h-14 rounded-full border-2 flex items-center justify-center shadow-lg transition-all duration-500 ${
+                      flowActive >= i
+                        ? "bg-viola/25 border-viola shadow-viola/20"
+                        : "bg-viola/10 border-viola/25"
+                    }`}
+                  >
+                    <span className={`font-anton text-sm transition-colors duration-500 ${flowActive >= i ? "text-viola" : "text-viola/40"}`}>
+                      {i + 1}
+                    </span>
                   </div>
-                  <p className="font-anton text-xs uppercase text-testo/70 mt-2 tracking-wider">
+                  <p
+                    className={`font-anton text-xs uppercase mt-2 tracking-wider transition-colors duration-500 ${
+                      flowActive >= i ? "text-testo/80" : "text-testo/30"
+                    }`}
+                  >
                     {step}
                   </p>
                 </div>
-                {i < flow.length - 1 && (
+                {i < FLOW.length - 1 && (
                   <svg
                     aria-hidden
-                    className="w-5 h-5 text-viola/40 hidden sm:block"
+                    className={`w-5 h-5 hidden sm:block transition-colors duration-500 ${flowActive > i ? "text-viola/60" : "text-viola/20"}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

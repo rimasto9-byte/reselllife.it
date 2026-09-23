@@ -91,8 +91,7 @@ export default function ProblemSection() {
               <div className="w-full h-full bg-gradient-to-br from-viola/20 to-superficie flex items-center justify-center p-4">
                 <div className="text-center">
                   <IconPhone />
-                  <p className="text-xs text-muted font-poppins mt-2">Screenshot Vinted</p>
-                  <p className="text-[10px] text-testo/30 mt-1">⚠️ Sostituire con immagine reale</p>
+                  <p className="text-xs text-muted/40 font-poppins mt-2">Screenshot Vinted</p>
                 </div>
               </div>
             </div>
@@ -101,8 +100,7 @@ export default function ProblemSection() {
               <div className="w-full h-full bg-gradient-to-br from-[#1a0835] to-superficie flex items-center justify-center p-4">
                 <div className="text-center">
                   <IconMessageSquare />
-                  <p className="text-xs text-muted font-poppins mt-2">Community screenshot</p>
-                  <p className="text-[10px] text-testo/30 mt-1">⚠️ Sostituire con immagine reale</p>
+                  <p className="text-xs text-muted/40 font-poppins mt-2">Community screenshot</p>
                 </div>
               </div>
             </div>

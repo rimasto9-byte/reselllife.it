@@ -215,10 +215,10 @@ export default function ProvaSociale() {
     <section id="risultati" aria-labelledby="risultati-heading" className="py-16 lg:py-28 bg-superficie">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 id="risultati-heading" className="font-anton text-[clamp(1.8rem,4vw,3rem)] uppercase text-center text-testo mb-4">
-          COSA DICONO DI NOI
+          IL RESELLING, VISTO DALLA NOSTRA COMMUNITY.
         </h2>
         <p className="text-center text-testo/60 text-sm max-w-2xl mx-auto mb-10 leading-relaxed">
-          Testimonianze reali di studenti dell&apos;Academy. I risultati sono individuali, non rappresentativi né garantiti, e dipendono dall&apos;impegno e dal tempo dedicato.
+          Parlano loro. Risultati individuali, non rappresentativi né garantiti, e dipendono dall&apos;impegno e dal tempo dedicato.
         </p>
 
         <div className="carousel-track" role="list" aria-label="Storie degli studenti">

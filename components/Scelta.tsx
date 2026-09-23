@@ -19,13 +19,13 @@ export default function Scelta() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <p className="text-viola font-poppins font-semibold text-sm uppercase tracking-[0.2em] mb-3">
-            Scegli come iniziare
+            Scegli il tuo percorso
           </p>
           <h2
             id="scelta-heading"
             className="font-anton text-[clamp(2rem,5vw,3.5rem)] uppercase text-testo leading-none"
           >
-            DUE STRADE
+            DA DOVE VUOI PARTIRE?
           </h2>
         </div>
 
@@ -36,7 +36,7 @@ export default function Scelta() {
             <div className="inline-flex items-center gap-1.5 bg-viola text-testo rounded-full px-3 py-1 self-start shadow-sm shadow-viola/40">
               <span className="w-1.5 h-1.5 rounded-full bg-testo inline-block" />
               <span className="text-xs font-poppins font-semibold uppercase tracking-wider">
-                Consigliato
+                02 COSTRUIRE
               </span>
             </div>
 
@@ -100,11 +100,10 @@ export default function Scelta() {
           <div className="bg-notte border border-bordo rounded-card p-6 flex flex-col gap-5 hover:border-viola/20 transition-colors duration-200">
             <div>
               <h3 className="font-anton text-2xl uppercase text-testo mb-2">
-                INIZIA CON UN FORNITORE
+                01 TESTARE
               </h3>
               <p className="text-muted/55 text-sm font-poppins leading-relaxed">
-                Una soluzione più semplice per chi vuole iniziare testando un
-                prodotto, senza impegno.
+                Un fornitore singolo per testare senza impegno.
               </p>
             </div>
 
