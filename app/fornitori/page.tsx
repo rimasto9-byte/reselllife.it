@@ -83,14 +83,14 @@ export default function FornitoriPage() {
                     )}
 
                     {/* Immagine */}
-                    <div className="relative aspect-square w-full bg-notte">
+                    <div className="relative aspect-video w-full bg-notte rounded-t-2xl overflow-hidden">
                       {product.image ? (
                         <Image
                           src={product.image}
                           alt={`Copertina ${product.title}`}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-cover"
+                          className="object-contain"
                           priority={idx < 2}
                         />
                       ) : (
@@ -201,7 +201,7 @@ export default function FornitoriPage() {
               {/* Immagine */}
               <div className="relative w-full max-w-sm aspect-square rounded-card-lg overflow-hidden bg-notte flex-shrink-0">
                 <Image
-                  src="/fornitori/coaching.png"
+                  src="/fornitori/coaching.jpg"
                   alt="Percorso coaching con il team Resellife"
                   fill
                   sizes="(max-width: 1024px) 80vw, 384px"
