@@ -83,14 +83,14 @@ export default function FornitoriPage() {
                     )}
 
                     {/* Immagine */}
-                    <div className="relative aspect-video w-full bg-notte rounded-t-2xl overflow-hidden">
+                    <div className="relative aspect-square w-full bg-notte rounded-t-2xl overflow-hidden">
                       {product.image ? (
                         <Image
                           src={product.image}
                           alt={`Copertina ${product.title}`}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-contain"
+                          className="object-cover"
                           priority={idx < 2}
                         />
                       ) : (
