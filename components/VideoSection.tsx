@@ -64,8 +64,19 @@ export default function VideoSection() {
   const togglePlay = () => {
     if (!videoRef.current) return;
     if (videoRef.current.paused) {
-      videoRef.current.play();
-      setIsPlaying(true);
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch((err) => {
+            console.error("Video play failed:", err);
+            setIsPlaying(false);
+          });
+      } else {
+        setIsPlaying(true);
+      }
     } else {
       videoRef.current.pause();
       setIsPlaying(false);
@@ -89,8 +100,7 @@ export default function VideoSection() {
               playsInline
               loop
               onClick={togglePlay}
-              className={isPlaying ? "opacity-100" : "opacity-0"}
-              style={{ position: isPlaying ? "relative" : "absolute", zIndex: isPlaying ? 10 : -1 }}
+              className={`w-full h-full object-cover transition-opacity duration-300 ${isPlaying ? "opacity-100 relative z-10" : "opacity-0 absolute inset-0 z-0"}`}
             />
             {!isPlaying && (
               <img src={activeVideo.poster} alt={activeVideo.title} onClick={togglePlay} className="absolute inset-0 w-full h-full object-cover cursor-pointer z-0" />

@@ -108,7 +108,7 @@ export default function Hero() {
               rel="noopener noreferrer"
               onClick={() => trackEvent("cta_quiz_hero")}
               id="cta-quiz-hero"
-              className="py-4 px-7 rounded-btn bg-viola text-white font-poppins font-bold text-sm uppercase tracking-wide hover:bg-viola-hover transition-colors whitespace-nowrap"
+              className="rl-cta-pulse py-4 px-7 rounded-btn bg-viola text-white font-poppins font-bold text-sm uppercase tracking-wide hover:bg-viola-hover transition-colors whitespace-nowrap"
             >
               SCOPRI SE FA PER TE →
             </a>

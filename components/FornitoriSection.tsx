@@ -52,7 +52,11 @@ export default function FornitoriSection() {
             <p className="lead" style={{ marginTop: 0 }}>
               Accedi ai nostri fornitori e alle risorse operative già organizzate per aiutarti a capire cosa acquistare, dove acquistare e come iniziare a testare il mercato.
             </p>
-            <a className="btn btn-blu" href="#fornitori" style={{ marginTop: "1.4rem" }}>
+            <a 
+              className="rl-cta-pulse py-4 px-8 rounded-btn bg-viola text-white font-poppins font-bold text-sm uppercase tracking-wide inline-flex items-center gap-2 hover:bg-viola-hover transition-colors" 
+              href="#fornitori" 
+              style={{ marginTop: "1.4rem" }}
+            >
               Vedi tutti i fornitori <span aria-hidden="true">→</span>
             </a>
           </div>

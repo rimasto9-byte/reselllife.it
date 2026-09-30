@@ -1,5 +1,4 @@
 import { ShoppingBag, Tag, RefreshCw } from "lucide-react";
-import ScrollWords from "@/components/motion/ScrollWords";
 
 const steps = [
   {
@@ -127,15 +126,16 @@ export default function Metodo() {
           </ol>
         </div>
 
-        {/* Closing statement — ScrollWords */}
+        {/* Closing statement */}
         <div className="mt-20 max-w-3xl text-left">
-          <ScrollWords
-            text="Il reselling non deve essere un affare occasionale. Deve diventare un processo che sai ripetere."
-            highlight={["processo", "ripetere"]}
-            as="p"
+          <p
+            data-reveal
             className="font-poppins text-white font-semibold text-[clamp(1.3rem,2.8vw,2.2rem)] leading-relaxed italic"
-            highlightClassName="text-accento not-italic"
-          />
+          >
+            Il reselling non deve essere un affare occasionale. Deve diventare un{" "}
+            <span className="text-accento not-italic">processo</span> che sai{" "}
+            <span className="text-accento not-italic">ripetere</span>.
+          </p>
         </div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   useScroll,
   useTransform,
@@ -16,7 +16,15 @@ import ScrollWords from "./ScrollWords";
  */
 export default function StickyStatement() {
   const ref = useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = useState(true);
   const shouldReduce = useReducedMotion();
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -40,7 +48,7 @@ export default function StickyStatement() {
   // Paragraph wrapper opacity: 0→1 (0.35→0.45) to prevent early flash
   const paraOpacity = useTransform(scrollYProgress, [0.35, 0.45], [0, 1]);
 
-  if (shouldReduce) {
+  if (shouldReduce || isMobile) {
     return (
       <section
         id="sticky-statement"
@@ -58,20 +66,27 @@ export default function StickyStatement() {
         </div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h2
-            className="font-anton text-[clamp(3rem,11vw,10rem)] leading-none uppercase mb-8 text-white"
+            data-reveal="zoom"
+            className="font-anton text-[clamp(4.5rem,15vw,10rem)] leading-none uppercase mb-8 text-white"
           >
             NON È
             <br />
-            <span className="rl-grad-text">FORTUNA.</span>
+            <span className="rl-grad-text drop-shadow-[0_0_30px_rgba(123,47,214,0.4)]">FORTUNA.</span>
           </h2>
-          <div className="w-24 h-[3px] rl-grad rounded-full mx-auto mb-8" />
-          <ScrollWords
-            text="È un processo: compri bene, vendi meglio, reinvesti. Ogni giorno. Con fornitori testati, un bot che lavora per te e una community che ti spinge avanti."
-            highlight={["processo", "reinvesti", "bot", "community"]}
-            as="p"
-            className="font-poppins font-semibold text-[clamp(1.15rem,2.4vw,1.9rem)] leading-relaxed text-white max-w-2xl mx-auto"
-            highlightClassName="text-blu"
+          <div
+            data-reveal
+            className="w-32 h-[4px] rl-grad rounded-full mx-auto mb-10 origin-center"
           />
+          <p
+            data-reveal
+            className="font-poppins font-semibold text-[clamp(1.15rem,2.4vw,1.9rem)] leading-relaxed text-white max-w-2xl mx-auto"
+          >
+            È un <span className="text-blu">processo</span>: compri bene, vendi
+            meglio, <span className="text-blu">reinvesti</span>. Ogni giorno.
+            Con fornitori testati, un <span className="text-blu">bot</span> che
+            lavora per te e una <span className="text-blu">community</span> che
+            ti spinge avanti.
+          </p>
         </div>
       </section>
     );
@@ -85,7 +100,7 @@ export default function StickyStatement() {
       style={{ height: "200vh" }}
       className="bg-[#0A0A0A]"
     >
-      <div className="sticky top-0 h-[100svh] flex flex-col items-center justify-center overflow-hidden">
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
         
         {/* Aura */}
         <motion.div

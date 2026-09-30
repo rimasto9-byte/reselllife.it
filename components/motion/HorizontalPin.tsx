@@ -43,6 +43,7 @@ export default function HorizontalPin({
   const [trackWidth, setTrackWidth] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(true);
 
   const slides = Array.isArray(children) ? children : [children];
   const count = slides.length;
@@ -63,10 +64,18 @@ export default function HorizontalPin({
     // Also recompute after fonts load (they may affect widths)
     document.fonts?.ready.then(measure);
 
-    window.addEventListener("resize", measure);
+    const handleResize = () => {
+      measure();
+      setIsMobile(window.innerWidth < 1024);
+    };
+    
+    // Initial check
+    setIsMobile(window.innerWidth < 1024);
+
+    window.addEventListener("resize", handleResize);
     return () => {
       ro.disconnect();
-      window.removeEventListener("resize", measure);
+      window.removeEventListener("resize", handleResize);
     };
   }, [measure]);
 
@@ -92,8 +101,8 @@ export default function HorizontalPin({
     return unsubscribe;
   }, [scrollYProgress, count]);
 
-  // Fallback: reduced motion OR track too short → swipe row
-  const isFallback = shouldReduce || scrollDistance <= 0;
+  // Fallback: reduced motion OR mobile OR track too short → swipe row
+  const isFallback = shouldReduce || isMobile || scrollDistance <= 0;
 
   if (isFallback) {
     return (
@@ -127,7 +136,7 @@ export default function HorizontalPin({
       className={className}
     >
       <div
-        className="sticky top-0 h-[100svh] flex flex-col justify-center overflow-hidden"
+        className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden"
       >
         {/* Heading */}
         {heading && (

@@ -1,40 +1,29 @@
 "use client";
 
-import { useRef } from "react";
-import { useScroll, useTransform, motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
 
 const ROW1 = ["METODO", "FORNITORI", "BOT", "GUIDE", "COMMUNITY"];
 const ROW2 = ["ACQUISTA", "VENDI", "RIPETI"];
 const SEP = "✦";
 
 function buildRow(items: string[]) {
-  // Triple the items so the marquee feels infinite
-  return [...items, ...items, ...items];
+  // 4 times to ensure it fills super wide screens seamlessly
+  return [...items, ...items, ...items, ...items];
 }
 
 /**
  * ScrollMarquee — pink (accento) band slightly rotated.
- * Two rows of giant Anton text move in opposite directions on scroll.
- * Replaces BrandStatement in page.tsx (BrandStatement.tsx file kept).
+ * Two rows of giant Anton text move continuously using pure CSS for 60fps performance.
+ * Replaces scroll-driven framer-motion to fix stuttering on Android.
  */
 export default function ScrollMarquee() {
-  const ref = useRef<HTMLDivElement>(null);
   const shouldReduce = useReducedMotion();
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const x1 = useTransform(scrollYProgress, [0, 1], ["0%", "-35%"]);
-  const x2 = useTransform(scrollYProgress, [0, 1], ["-35%", "0%"]);
-
-  const effectiveX1 = shouldReduce ? "0%" : x1;
-  const effectiveX2 = shouldReduce ? "-35%" : x2;
+  // If user prefers reduced motion, pause the animation
+  const animStyle = shouldReduce ? { animationPlayState: "paused" } : {};
 
   return (
     <div
-      ref={ref}
       aria-label="Pilastri: Metodo, Fornitori, Bot, Guide, Community. Acquista, Vendi, Ripeti."
       className="relative overflow-hidden py-6"
       style={{
@@ -43,11 +32,14 @@ export default function ScrollMarquee() {
         marginBlock: "clamp(1.5rem, 4vw, 3rem)",
       }}
     >
-      {/* Row 1 — solid inchiostro */}
-      <motion.div
+      {/* Row 1 — solid inchiostro, moves Left */}
+      <div
         aria-hidden
-        style={{ x: effectiveX1 }}
-        className="flex whitespace-nowrap mb-1"
+        className="flex whitespace-nowrap mb-1 w-max"
+        style={{
+          animation: "marquee-left 35s linear infinite",
+          ...animStyle,
+        }}
       >
         {buildRow(ROW1).map((item, i) => (
           <span
@@ -59,13 +51,16 @@ export default function ScrollMarquee() {
             <span className="text-[#0A0A0A]/40 text-[0.3em]">{SEP}</span>
           </span>
         ))}
-      </motion.div>
+      </div>
 
-      {/* Row 2 — outlined text */}
-      <motion.div
+      {/* Row 2 — outlined text, moves Right */}
+      <div
         aria-hidden
-        style={{ x: effectiveX2 }}
-        className="flex whitespace-nowrap"
+        className="flex whitespace-nowrap w-max"
+        style={{
+          animation: "marquee-right 30s linear infinite",
+          ...animStyle,
+        }}
       >
         {buildRow(ROW2).map((item, i) => (
           <span
@@ -90,7 +85,7 @@ export default function ScrollMarquee() {
             </span>
           </span>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }

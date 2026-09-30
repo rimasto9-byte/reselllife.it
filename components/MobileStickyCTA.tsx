@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { QUIZ_URL } from "@/lib/config";
+import { trackEvent } from "@/lib/analytics";
 
 export default function MobileStickyCTA() {
   const [visible, setVisible] = useState(false);
-  const [formInView, setFormInView] = useState(false);
+  const [ctaInView, setCtaInView] = useState(false);
 
   useEffect(() => {
     // Show bar after scrolling past hero
@@ -13,20 +15,20 @@ export default function MobileStickyCTA() {
     };
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    // Hide when either form is visible
-    const formEls = [
-      document.getElementById("form-hero-mobile"),
-      document.getElementById("form-cta-finale"),
+    // Hide when either main CTA is visible
+    const ctaEls = [
+      document.getElementById("cta-quiz-hero"),
+      document.getElementById("cta-quiz-finale"),
     ].filter(Boolean) as HTMLElement[];
 
     const observer = new IntersectionObserver(
       (entries) => {
         const anyVisible = entries.some((e) => e.isIntersecting);
-        setFormInView(anyVisible);
+        setCtaInView(anyVisible);
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
-    formEls.forEach((el) => observer.observe(el));
+    ctaEls.forEach((el) => observer.observe(el));
 
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -34,7 +36,7 @@ export default function MobileStickyCTA() {
     };
   }, []);
 
-  if (!visible || formInView) return null;
+  if (!visible || ctaInView) return null;
 
   return (
     <div
@@ -47,14 +49,18 @@ export default function MobileStickyCTA() {
       aria-hidden={!visible}
     >
       <a
-        href="#form-hero-mobile"
+        href={QUIZ_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => trackEvent("cta_quiz_mobile_sticky")}
         className="
-          flex-1 py-3.5 px-5 rounded-btn bg-accento text-testo
-          font-anton uppercase text-base tracking-wide text-center
-          hover:bg-accento-hover transition-colors
+          rl-cta-pulse
+          flex-1 py-4 px-5 rounded-btn bg-viola text-white
+          font-poppins font-bold text-sm uppercase tracking-wide text-center
+          hover:bg-viola-hover transition-colors
         "
       >
-        SCARICA LA GUIDA GRATUITA
+        SCOPRI SE FA PER TE →
       </a>
     </div>
   );

@@ -14,8 +14,8 @@ export default function RevealObserver() {
     // Mark html so CSS hidden states engage
     document.documentElement.classList.add("reveal-ready");
 
-    const THRESHOLD = 0.15;
-    const ROOT_MARGIN = "0px 0px -8% 0px";
+    const THRESHOLD = 0.05;
+    const ROOT_MARGIN = "0px 0px -40px 0px";
 
     function observe(el: Element) {
       io.observe(el);

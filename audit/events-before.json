@@ -1,0 +1,30 @@
+{
+  "analytics": [
+    "trackEvent(\"fornitore_click\")",
+    "trackEvent(\"whatsapp_click\")",
+    "trackEvent(\"view_hero\")",
+    "trackEvent(\"cta_quiz_hero\")",
+    "trackEvent(\"cta_academy_hero\")",
+    "trackEvent(\"bonus_wheel_notif_shown\")",
+    "trackEvent(\"bonus_exit_intent_shown\")",
+    "trackEvent(\"bonus_wheel_opened\")",
+    "trackEvent(\"bonus_wheel_spin\", { prize: PRIZES[idx].id })",
+    "trackEvent(\"bonus_wheel_submitted\", { prize: prize?.id ?? \"\" })",
+    "trackEvent(\"exit_intent_submitted\")",
+    "trackEvent(\"quiz_click_section\")",
+    "trackEvent(\"testimonial_open\", { story: stories[activeStory].id })",
+    "trackEvent(\"faq_open\", { question: faq.q.slice(0, 50) })",
+    "trackEvent(\"quiz_click_nav\")",
+    "trackEvent(\"academy_click_nav\")",
+    "trackEvent(\"quiz_click_nav_mobile\")",
+    "trackEvent(\"fornitore_click\", { product: productId, price })",
+    "trackEvent(\"bot_panel_click\")",
+    "trackEvent(\"form_start\")",
+    "trackEvent(\"form_submit\")",
+    "trackEvent(\"form_success\")",
+    "trackEvent(\"cta_guida_click\")",
+    "trackEvent(\"call_click\")",
+    "trackEvent(\"fornitore_click\")",
+    "trackEvent(\"academy_click\")"
+  ]
+}

@@ -172,7 +172,7 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 id="cta-quiz-finale"
-                className="py-4 px-8 rounded-btn bg-inchiostro text-white font-poppins font-bold text-base uppercase hover:bg-black transition-all hover:scale-[1.02] shadow-lg"
+                className="rl-cta-pulse py-4 px-8 rounded-btn bg-inchiostro text-white font-poppins font-bold text-base uppercase hover:bg-black transition-all hover:scale-[1.02]"
               >
                 INIZIA IL QUIZ →
               </a>

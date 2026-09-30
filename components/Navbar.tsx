@@ -82,7 +82,7 @@ export default function Navbar({ academyUrl }: NavbarProps) {
             rel="noopener noreferrer"
             className="hover:text-testo transition-colors duration-150"
           >
-            Quiz
+            Fai il Quiz
           </a>
           <a
             href={academyUrl}
@@ -100,7 +100,7 @@ export default function Navbar({ academyUrl }: NavbarProps) {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackEvent("quiz_click_nav_mobile")}
-          className="md:hidden py-2 px-4 rounded-btn border border-viola text-viola font-semibold text-xs hover:bg-viola/10 transition-colors"
+          className="rl-cta-pulse md:hidden py-2 px-5 rounded-btn bg-viola text-white font-poppins font-bold text-xs uppercase tracking-wide hover:bg-viola-hover transition-colors shadow-lg"
         >
           Fai il quiz
         </a>
