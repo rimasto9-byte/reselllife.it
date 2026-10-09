@@ -38,8 +38,8 @@ const bundles = [
 
 export default function FornitoriSection() {
   return (
-    <section className="sec forn" id="fornitori" aria-labelledby="forn-h">
-      <div className="glow" style={{ width: "800px", height: "800px", left: "-300px", top: "10%", background: "radial-gradient(closest-side,rgba(47,107,255,.18),transparent)", position: "absolute" }}></div>
+    <section className="sec forn relative overflow-hidden" id="fornitori" aria-labelledby="forn-h">
+      <div className="glow pointer-events-none max-w-full" style={{ width: "min(800px, 100vw)", height: "800px", left: "-150px", top: "10%", background: "radial-gradient(closest-side,rgba(47,107,255,.18),transparent)", position: "absolute" }}></div>
       <div className="wrap relative z-10">
         <div className="top">
           <div>
@@ -54,7 +54,7 @@ export default function FornitoriSection() {
             </p>
             <a 
               className="rl-cta-pulse py-4 px-8 rounded-btn bg-viola text-white font-poppins font-bold text-sm uppercase tracking-wide inline-flex items-center gap-2 hover:bg-viola-hover transition-colors" 
-              href="#fornitori" 
+              href="/fornitori" 
               style={{ marginTop: "1.4rem" }}
             >
               Vedi tutti i fornitori <span aria-hidden="true">→</span>

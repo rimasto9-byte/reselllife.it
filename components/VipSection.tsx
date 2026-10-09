@@ -137,7 +137,7 @@ export default function VipSection() {
 
             {/* Collab label */}
             {SHOW_COLLAB_LABEL && (
-              <div className="absolute top-7 left-3 z-20 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[11px] font-medium tracking-wide text-white pointer-events-none">
+              <div className="absolute top-7 left-3 z-20 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-xs font-medium tracking-wide text-white pointer-events-none">
                 Collaborazione
               </div>
             )}

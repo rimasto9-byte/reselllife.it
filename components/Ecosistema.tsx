@@ -11,7 +11,7 @@ const pillars = [
     num: "01",
     label: "FORNITORI VERIFICATI",
     desc: "Contatti reali e testati, non liste generiche trovate online.",
-    bg: "#7B2FD6",
+    bg: "#8B5CF6",
     text: "#FFFFFF",
     numColor: "rgba(255,255,255,0.25)",
     iconColor: "rgba(255,255,255,0.85)",
@@ -22,10 +22,10 @@ const pillars = [
     num: "02",
     label: "BOT RESELLIFE",
     desc: "Il tuo radar sul mercato, attivo 24 ore su 24.",
-    bg: "#FF1FA8",
-    text: "#0A0A0A",
-    numColor: "rgba(10,10,10,0.25)",
-    iconColor: "#0A0A0A",
+    bg: "#C026D3",
+    text: "#FFFFFF",
+    numColor: "rgba(255,255,255,0.25)",
+    iconColor: "#FFFFFF",
   },
   {
     id: "guide",
@@ -33,7 +33,7 @@ const pillars = [
     num: "03",
     label: "GUIDE OPERATIVE",
     desc: 'PDF pratici, dalla guida "Da 0 a 1000" alle strategie avanzate.',
-    bg: "#2F6BFF",
+    bg: "#6D28D9",
     text: "#FFFFFF",
     numColor: "rgba(255,255,255,0.25)",
     iconColor: "#FFFFFF",
@@ -47,8 +47,8 @@ const pillars = [
     bg: "#141414",
     text: "#FFFFFF",
     numColor: "rgba(255,255,255,0.25)",
-    iconColor: "#FF1FA8",
-    border: "#2F6BFF",
+    iconColor: "#C026D3",
+    border: "#8B5CF6",
   },
   {
     id: "supporto",
@@ -56,14 +56,14 @@ const pillars = [
     num: "05",
     label: "SUPPORTO DIRETTO",
     desc: "Rispondiamo noi, non un bot di assistenza.",
-    bg: "linear-gradient(140deg, #FF1FA8, #7B2FD6 55%, #2F6BFF)",
+    bg: "linear-gradient(140deg, #C026D3, #8B5CF6 55%, #6D28D9)",
     text: "#FFFFFF",
     numColor: "rgba(255,255,255,0.25)",
     iconColor: "#FFFFFF",
   },
 ];
 
-const SLIDE_WIDTH = "min(78vw, 380px)";
+const SLIDE_WIDTH = "min(82vw, 340px)";
 
 function Slide({
   pillar,

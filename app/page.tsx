@@ -16,8 +16,10 @@ import QuizSection from "@/components/QuizSection";
 import CallSection from "@/components/CallSection";
 import Bonus from "@/components/Bonus";
 import FAQ from "@/components/FAQ";
+import ZeroRischio from "@/components/ZeroRischio";
 import Footer from "@/components/Footer";
 import BonusWheel from "@/components/BonusWheel";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
 
 export const metadata: Metadata = {
   alternates: {
@@ -128,6 +130,9 @@ export default function HomePage() {
         {/* 08 — Fornitori: NON PARTI DA ZERO (white bg) */}
         <FornitoriSection />
 
+        {/* 08b — Bonus: apilar valor antes de la prueba y el precio */}
+        <Bonus />
+
         {/* 09 — Prova Sociale: wall of proof */}
         <ProvaSociale />
 
@@ -137,14 +142,14 @@ export default function HomePage() {
         {/* 11 — Scelta: DA DOVE VUOI PARTIRE? */}
         <Scelta />
 
+        {/* 11b — Zero rischio: riduzione del rischio vicino al prezzo */}
+        <ZeroRischio />
+
         {/* 12 — Quiz: IL RESELL FA PER TE? */}
         <QuizSection />
 
         {/* 13 — Call: HAI ANCORA DUBBI? */}
         <CallSection />
-
-        {/* 14 — Bonus: INIZIA CON UN VANTAGGIO IN PIÙ */}
-        <Bonus />
 
         {/* 15 — FAQ */}
         <FAQ />
@@ -194,6 +199,9 @@ export default function HomePage() {
 
       {/* Bonus Wheel — global overlay, sessionStorage-gated */}
       <BonusWheel />
+
+      {/* Mobile Sticky CTA bar for phone viewports */}
+      <MobileStickyCTA />
     </>
   );
 }

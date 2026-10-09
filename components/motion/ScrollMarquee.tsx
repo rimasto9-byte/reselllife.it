@@ -27,7 +27,7 @@ export default function ScrollMarquee() {
       aria-label="Pilastri: Metodo, Fornitori, Bot, Guide, Community. Acquista, Vendi, Ripeti."
       className="relative overflow-hidden py-6"
       style={{
-        backgroundColor: "#FF1FA8",
+        backgroundColor: "#7C3AED",
         transform: "rotate(-1deg) scaleX(1.03)",
         marginBlock: "clamp(1.5rem, 4vw, 3rem)",
       }}

@@ -40,6 +40,7 @@ const videos = [
     tag: "Community",
     tagColor: "#888",
   },
+
 ];
 
 export default function VideoSection() {
@@ -88,7 +89,7 @@ export default function VideoSection() {
   };
 
   return (
-    <section className="sec vid py-16 lg:py-28" id="video">
+    <section className="sec vid py-16 lg:py-28 relative overflow-hidden" id="video">
       <div className="wrap relative z-10 mx-auto px-4 max-w-7xl">
         <div className="grid-layout">
           <div className={`player ${swap ? 'swap' : ''}`} id="player" data-reveal="zoom">
@@ -103,7 +104,7 @@ export default function VideoSection() {
               className={`w-full h-full object-cover transition-opacity duration-300 ${isPlaying ? "opacity-100 relative z-10" : "opacity-0 absolute inset-0 z-0"}`}
             />
             {!isPlaying && (
-              <img src={activeVideo.poster} alt={activeVideo.title} onClick={togglePlay} className="absolute inset-0 w-full h-full object-cover cursor-pointer z-0" />
+              <img src={activeVideo.poster} alt={activeVideo.title} onClick={togglePlay} className="absolute inset-0 w-full h-full object-contain cursor-pointer z-0" />
             )}
             
             {!isPlaying && (

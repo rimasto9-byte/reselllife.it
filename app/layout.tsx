@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { Anton, Poppins } from "next/font/google";
+import { Archivo_Black, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { SITE_URL } from "@/lib/config";
 import CookieBanner from "@/components/CookieBanner";
 import ScrollProgress from "@/components/motion/ScrollProgress";
 import RevealObserver from "@/components/motion/RevealObserver";
+import SmoothScroll from "@/components/motion/SmoothScroll";
+import TextFx from "@/components/motion/TextFx";
 
 // ── Fonts autohosted — zero runtime requests to Google ──
-const anton = Anton({
+const anton = Archivo_Black({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-anton",
   display: "swap",
 });
 
-const poppins = Poppins({
-  weight: ["400", "500", "600", "700"],
+const poppins = Plus_Jakarta_Sans({
+  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
   variable: "--font-poppins",
   display: "swap",
@@ -71,6 +73,8 @@ export default function RootLayout({
     >
       <body className="bg-notte text-testo font-poppins antialiased">
         {/* Scroll progress bar — fixed top */}
+        <SmoothScroll />
+        <TextFx />
         <ScrollProgress />
         {/* Reveal observer — activates data-reveal animations */}
         <RevealObserver />
