@@ -219,7 +219,7 @@ export default function BonusWheel() {
         }}
       >
         {/* Outer ring */}
-        <circle cx={cx} cy={cy} r={r + 6} fill="none" stroke="#FF1FA8" strokeWidth="3" strokeDasharray="8 6" />
+        <circle cx={cx} cy={cy} r={r + 6} fill="none" stroke="#A855F7" strokeWidth="3" strokeDasharray="8 6" />
         {segments}
         {/* Center hub */}
         <circle cx={cx} cy={cy} r={22} fill="#0D0714" stroke="#7B2FD6" strokeWidth="3" />
@@ -232,7 +232,7 @@ export default function BonusWheel() {
   const Needle = () => (
     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 z-10 pointer-events-none" aria-hidden>
       <svg width="20" height="30" viewBox="0 0 20 30">
-        <polygon points="10,0 0,30 20,30" fill="#FF1FA8" />
+        <polygon points="10,0 0,30 20,30" fill="#A855F7" />
       </svg>
     </div>
   );
@@ -288,8 +288,13 @@ export default function BonusWheel() {
             <div className="relative bg-gradient-to-br from-[#1a0835] to-notte px-6 pt-6 pb-4 border-b border-viola/20">
               <p className="text-xs font-poppins font-semibold uppercase tracking-[0.2em] text-viola mb-1">Resellife Bonus</p>
               <h2 className="font-anton text-2xl uppercase text-testo">
-                {phase === "done" ? "BONUS INVIATO!" : "GIRA LA RUOTA"}
+                {phase === "done" ? "BONUS INVIATO!" : "Sblocca il tuo bonus gratuito"}
               </h2>
+              {phase !== "done" && (
+                <p className="text-sm font-poppins text-testo/70 mt-2">
+                  Gira la ruota e scopri cosa abbiamo preparato per te.
+                </p>
+              )}
               <button
                 onClick={() => { setModalOpen(false); setPhase("spin"); setPrizeIndex(null); setRotation(0); }}
                 className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/15 transition-colors text-testo/60 hover:text-testo"
@@ -479,7 +484,7 @@ export default function BonusWheel() {
               >
                 RICEVI LA GUIDA →
               </button>
-              <p className="text-center text-[10px] text-testo/30 font-poppins">
+              <p className="text-center text-xs text-testo/30 font-poppins">
                 Nessuno spam. Puoi cancellarti in qualsiasi momento.
               </p>
             </form>

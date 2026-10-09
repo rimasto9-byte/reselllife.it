@@ -107,6 +107,7 @@ export default function HorizontalPin({
   if (isFallback) {
     return (
       <section
+        ref={sectionRef}
         id="ecosistema"
         aria-labelledby="ecosistema-heading"
         className={`py-16 lg:py-24 ${className}`}

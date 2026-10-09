@@ -6,7 +6,7 @@ import { trackEvent } from "@/lib/analytics";
 
 export default function Scelta() {
   return (
-    <section className="sec scelta py-16 lg:py-28" id="scelta" aria-labelledby="scelta-h">
+    <section className="sec scelta py-16 lg:py-28 relative overflow-hidden" id="scelta" aria-labelledby="scelta-h">
       <div className="wrap mx-auto px-4 max-w-7xl relative z-10">
         <div className="head">
           <p className="eyebrow" data-reveal>Scegli il tuo percorso</p>

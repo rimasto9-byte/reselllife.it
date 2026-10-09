@@ -12,13 +12,11 @@ interface NavbarProps {
 
 // Logo: aggiungi /public/logo.png dall'asset reale (Drive 01_LOGO) e cambia il valore qui sotto a false
 // TODO: quando il file logo.png è caricato in /public/, imposta LOGO_MISSING = false
-const LOGO_MISSING = true;
+const LOGO_MISSING = false;
 const LOGO_SRC = "/logo.png";
 
 export default function Navbar({ academyUrl }: NavbarProps) {
   const [scrolled, setScrolled]         = useState(false);
-  // logoError: inizia a true perché /public/logo.png non esiste ancora (HTTP 400 in produzione)
-  // Quando il file viene aggiunto, impostare LOGO_MISSING = false in cima al file
   const [logoError, setLogoError]       = useState(LOGO_MISSING);
 
   useEffect(() => {
@@ -31,8 +29,8 @@ export default function Navbar({ academyUrl }: NavbarProps) {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-notte/95 backdrop-blur-md border-b border-bordo/60 shadow-[0_4px_24px_rgba(0,0,0,0.4)] h-14"
-          : "bg-transparent border-b border-transparent h-16"
+          ? "bg-notte/95 backdrop-blur-md border-b border-bordo/60 shadow-[0_4px_24px_rgba(0,0,0,0.4)] h-16"
+          : "bg-notte/60 backdrop-blur-sm border-b border-white/5 h-20"
       }`}
       aria-label="Navigazione principale"
     >
@@ -41,21 +39,23 @@ export default function Navbar({ academyUrl }: NavbarProps) {
         {/* ── Logo / brand ── */}
         <Link
           href="/"
-          className="flex items-center gap-2 hover:opacity-90 transition-opacity duration-200"
+          className="flex items-center gap-3 hover:opacity-95 transition-opacity duration-200 py-1"
           aria-label="Resellife Academy — homepage"
         >
           {!logoError ? (
-            <Image
-              src={LOGO_SRC}
-              alt="Resellife Academy"
-              width={120}
-              height={32}
-              className="h-8 w-auto object-contain"
-              onError={() => setLogoError(true)}
-              priority
-            />
+            <div className="flex items-center gap-2">
+              <Image
+                src={LOGO_SRC}
+                alt="Resellife Academy Logo"
+                width={200}
+                height={64}
+                className="h-12 sm:h-14 w-auto object-contain drop-shadow-[0_0_12px_rgba(139,92,246,0.4)]"
+                onError={() => setLogoError(true)}
+                priority
+              />
+            </div>
           ) : (
-            <span className="font-anton text-xl uppercase text-testo tracking-wide">
+            <span className="font-anton text-xl sm:text-2xl uppercase text-testo tracking-wide">
               Resellife <span className="text-viola">Academy</span>
             </span>
           )}
@@ -72,9 +72,12 @@ export default function Navbar({ academyUrl }: NavbarProps) {
           <Link href="#bot" className="hover:text-testo transition-colors duration-150">
             Bot
           </Link>
-          <Link href="#fornitori" className="hover:text-testo transition-colors duration-150">
-            Fornitori
-          </Link>
+          <a
+            href="/fornitori"
+            className="py-1.5 px-4 rounded-btn border border-viola text-viola font-semibold text-sm hover:bg-viola/10 transition-all"
+          >
+            Lista Fornitori
+          </a>
           <a
             href={QUIZ_URL}
             onClick={() => trackEvent("quiz_click_nav")}
@@ -94,16 +97,24 @@ export default function Navbar({ academyUrl }: NavbarProps) {
           </a>
         </div>
 
-        {/* ── Mobile: quiz CTA ── */}
-        <a
-          href={QUIZ_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackEvent("quiz_click_nav_mobile")}
-          className="rl-cta-pulse md:hidden py-2 px-5 rounded-btn bg-viola text-white font-poppins font-bold text-xs uppercase tracking-wide hover:bg-viola-hover transition-colors shadow-lg"
-        >
-          Fai il quiz
-        </a>
+        {/* ── Mobile: quiz & fornitori CTA ── */}
+        <div className="flex md:hidden items-center gap-3">
+          <a
+            href="/fornitori"
+            className="py-2 px-4 rounded-btn border border-viola text-viola font-poppins font-bold text-xs uppercase tracking-wide hover:bg-viola/10 transition-colors"
+          >
+            Fornitori
+          </a>
+          <a
+            href={QUIZ_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent("quiz_click_nav_mobile")}
+            className="rl-cta-pulse py-2 px-5 rounded-btn bg-viola text-white font-poppins font-bold text-xs uppercase tracking-wide hover:bg-viola-hover transition-colors shadow-lg"
+          >
+            Fai il quiz
+          </a>
+        </div>
       </div>
     </nav>
   );

@@ -38,6 +38,7 @@ export type AnalyticsEvent =
   | "whatsapp_click"
   | "faq_open"
   | "testimonial_open"
+  | "testimonial_view"
   | "quiz_click_nav"
   | "quiz_click_nav_mobile"
   | "quiz_click_section"
@@ -50,7 +51,8 @@ export type AnalyticsEvent =
   | "bonus_wheel_spin"
   | "bonus_wheel_submitted"
   | "bonus_exit_intent_shown"
-  | "exit_intent_submitted";
+  | "exit_intent_submitted"
+  | "cta_quiz_mobile_sticky";
 
 export function trackEvent(
   event: AnalyticsEvent,

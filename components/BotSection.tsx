@@ -59,7 +59,7 @@ function BotSectionInner() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="sec bot" id="bot" aria-labelledby="bot-h">
+    <section ref={sectionRef} className="sec bot relative overflow-hidden" id="bot" aria-labelledby="bot-h">
       <div className="wrap relative z-10 mx-auto px-4 max-w-7xl">
         <p className="eyebrow" data-reveal>Lo strumento</p>
         <h2 className="h" id="bot-h" data-reveal style={{ "--reveal-delay": "80ms" } as React.CSSProperties}>

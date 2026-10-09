@@ -31,7 +31,7 @@ export default function PageBackground() {
     const ORB_COLORS = [
       "123,47,214",   // viola
       "100,30,180",   // viola scuro
-      "255,31,168",   // magenta accento
+      "168,85,247",   // magenta accento
       "80,20,160",    // viola deep
     ];
 

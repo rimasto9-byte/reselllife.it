@@ -14,19 +14,36 @@
  * a build-time nei Server Components — non in runtime nel browser.
  */
 
+// Le NEXT_PUBLIC_ vanno scritte come accesso statico (process.env.NEXT_PUBLIC_X):
+// con una chiave dinamica il bundle client non le sostituisce e usa sempre il fallback.
+const ENV: Record<string, string | undefined> = {
+  NEXT_PUBLIC_ACADEMY_URL: process.env.NEXT_PUBLIC_ACADEMY_URL,
+  NEXT_PUBLIC_FORM_ENDPOINT: process.env.NEXT_PUBLIC_FORM_ENDPOINT,
+  NEXT_PUBLIC_CALENDLY_URL: process.env.NEXT_PUBLIC_CALENDLY_URL,
+  NEXT_PUBLIC_COACHING_APPLY_URL: process.env.NEXT_PUBLIC_COACHING_APPLY_URL,
+  NEXT_PUBLIC_QUIZ_URL: process.env.NEXT_PUBLIC_QUIZ_URL,
+  NEXT_PUBLIC_GA4_ID: process.env.NEXT_PUBLIC_GA4_ID,
+  NEXT_PUBLIC_META_PIXEL_ID: process.env.NEXT_PUBLIC_META_PIXEL_ID,
+  NEXT_PUBLIC_TIKTOK_PIXEL_ID: process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID,
+  NEXT_PUBLIC_SHOW_BOT_SECTION: process.env.NEXT_PUBLIC_SHOW_BOT_SECTION,
+  NEXT_PUBLIC_SHOW_COLLAB_LABEL: process.env.NEXT_PUBLIC_SHOW_COLLAB_LABEL,
+  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+};
+
 function get(key: string, fallback = ""): string {
-  // In client bundles, NEXT_PUBLIC_ vars are statically replaced at compile time.
-  // In server context, process.env is available normally.
-  return process.env[key] ?? fallback;
+  return ENV[key] ?? fallback;
 }
 
 // ── Academy URL ──
 // Completare NEXT_PUBLIC_ACADEMY_URL nelle env vars Railway (produzione)
 // e in .env.local (sviluppo) con l'URL reale del checkout Academy.
 // Fallback temporaneo: WhatsApp per non lasciare un link rotto.
-export const ACADEMY_URL =
-  get("NEXT_PUBLIC_ACADEMY_URL") ||
+const ACADEMY_FALLBACK =
   "https://wa.me/393398420279?text=Ciao%2C+voglio+entrare+in+Academy+Resellife";
+const academyEnv = get("NEXT_PUBLIC_ACADEMY_URL");
+// un URL segnaposto (example.com / "placeholder") conta come non configurato
+export const ACADEMY_URL =
+  academyEnv && !/example\.com|placeholder/i.test(academyEnv) ? academyEnv : ACADEMY_FALLBACK;
 
 export const FORM_ENDPOINT = get(
   "NEXT_PUBLIC_FORM_ENDPOINT",

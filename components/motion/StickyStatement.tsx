@@ -1,154 +1,123 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import {
-  useScroll,
-  useTransform,
-  motion,
-  useReducedMotion,
-} from "motion/react";
-import ScrollWords from "./ScrollWords";
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { ShoppingBag, Tag, Repeat2, ArrowRight } from "lucide-react";
 
-/**
- * StickyStatement — h-[200vh] outer section with sticky h-[100svh] inner.
- * Scroll-driven: aura reveals/spins, heading scales down,
- * gradient line grows, ScrollWords paragraph reveals word by word.
- */
+const STEPS = [
+  { icon: ShoppingBag, label: "Compri bene" },
+  { icon: Tag, label: "Vendi meglio" },
+  { icon: Repeat2, label: "Reinvesti" },
+];
+
+const TAGS = ["Fornitori testati", "Bot che lavora per te", "Community"];
+
 export default function StickyStatement() {
-  const ref = useRef<HTMLElement>(null);
-  const [isMobile, setIsMobile] = useState(true);
-  const shouldReduce = useReducedMotion();
+  const reduce = useReducedMotion();
+  const [active, setActive] = useState(0);
 
+  // il ciclo evidenzia un passo alla volta, all'infinito
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 1024);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
+    if (reduce) return;
+    const id = setInterval(() => setActive((a) => (a + 1) % STEPS.length), 1600);
+    return () => clearInterval(id);
+  }, [reduce]);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-
-  // Aura animations
-  const auraScale = useTransform(scrollYProgress, [0, 0.5], [0.3, 1.15]);
-  const auraOpacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0.9, 0.6]);
-  const auraRotate = useTransform(scrollYProgress, [0, 1], [0, 90]);
-
-  // Heading scale: 2.4 → 1 (0→0.4)
-  const scale = useTransform(scrollYProgress, [0, 0.4], [2.4, 1]);
-
-  // Heading opacity: 0 → 1 (0→0.08)
-  const headingOpacity = useTransform(scrollYProgress, [0, 0.08], [0, 1]);
-
-  // Gradient line scaleX: 0→1 (0.3→0.5)
-  const lineScaleX = useTransform(scrollYProgress, [0.3, 0.5], [0, 1]);
-
-  // Paragraph wrapper opacity: 0→1 (0.35→0.45) to prevent early flash
-  const paraOpacity = useTransform(scrollYProgress, [0.35, 0.45], [0, 1]);
-
-  if (shouldReduce || isMobile) {
-    return (
-      <section
-        id="sticky-statement"
-        aria-label="Non è fortuna. È un processo."
-        className="py-24 bg-[#0A0A0A] text-white overflow-hidden relative"
-      >
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-60">
-          <div
-            aria-hidden
-            className="w-[120vmin] h-[120vmin] rounded-full blur-[90px]"
-            style={{
-              background: "conic-gradient(rgba(255,31,168,.45), rgba(123,47,214,.45), rgba(47,107,255,.45), rgba(255,31,168,.45))",
-            }}
-          />
-        </div>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2
-            data-reveal="zoom"
-            className="font-anton text-[clamp(4.5rem,15vw,10rem)] leading-none uppercase mb-8 text-white"
-          >
-            NON È
-            <br />
-            <span className="rl-grad-text drop-shadow-[0_0_30px_rgba(123,47,214,0.4)]">FORTUNA.</span>
-          </h2>
-          <div
-            data-reveal
-            className="w-32 h-[4px] rl-grad rounded-full mx-auto mb-10 origin-center"
-          />
-          <p
-            data-reveal
-            className="font-poppins font-semibold text-[clamp(1.15rem,2.4vw,1.9rem)] leading-relaxed text-white max-w-2xl mx-auto"
-          >
-            È un <span className="text-blu">processo</span>: compri bene, vendi
-            meglio, <span className="text-blu">reinvesti</span>. Ogni giorno.
-            Con fornitori testati, un <span className="text-blu">bot</span> che
-            lavora per te e una <span className="text-blu">community</span> che
-            ti spinge avanti.
-          </p>
-        </div>
-      </section>
-    );
-  }
+  const rise = {
+    hidden: { opacity: 0, y: 40 },
+    show: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+    }),
+  };
 
   return (
     <section
-      ref={ref}
       id="sticky-statement"
       aria-label="Non è fortuna. È un processo."
-      style={{ height: "200vh" }}
-      className="bg-[#0A0A0A]"
+      className="py-20 sm:py-28 text-white relative overflow-hidden"
     >
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
-        
-        {/* Aura */}
-        <motion.div
-          aria-hidden
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          style={{ opacity: auraOpacity, scale: auraScale, rotate: auraRotate }}
+      <div
+        aria-hidden
+        className="rl-aurora top-1/4 left-1/2 -translate-x-1/2 w-[420px] h-[420px] bg-violet-600/30"
+      />
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        {/* "NON È FORTUNA" con tratto che cancella la parola */}
+        <motion.h2
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.6 }}
+          className="font-anton uppercase leading-none"
         >
-          <div
-            className="w-[120vmin] h-[120vmin] rounded-full blur-[90px]"
-            style={{
-              background: "conic-gradient(rgba(255,31,168,.45), rgba(123,47,214,.45), rgba(47,107,255,.45), rgba(255,31,168,.45))",
-            }}
-          />
-        </motion.div>
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          {/* Main heading */}
-          <motion.h2
-            style={{
-              scale,
-              opacity: headingOpacity,
-            }}
-            className="font-anton text-[clamp(3rem,11vw,10rem)] leading-none uppercase mb-8 origin-center text-white"
-          >
-            NON È
-            <br />
-            <span className="rl-grad-text">FORTUNA.</span>
-          </motion.h2>
-
-          {/* Gradient line */}
-          <motion.div
-            style={{ scaleX: lineScaleX, transformOrigin: "center" }}
-            className="w-24 h-[3px] rl-grad rounded-full mx-auto mb-8"
-          />
-
-          {/* Paragraph */}
-          <motion.div style={{ opacity: paraOpacity }}>
-            <ScrollWords
-              text="È un processo: compri bene, vendi meglio, reinvesti. Ogni giorno. Con fornitori testati, un bot che lavora per te e una community che ti spinge avanti."
-              highlight={["processo", "reinvesti", "bot", "community"]}
-              as="p"
-              className="font-poppins font-semibold text-[clamp(1.15rem,2.4vw,1.9rem)] leading-relaxed text-white max-w-2xl mx-auto"
-              highlightClassName="text-blu"
-              progress={scrollYProgress}
-              range={[0.42, 0.92]}
+          <motion.span custom={0} variants={rise} className="block text-white/50 relative w-fit mx-auto">
+            Non è fortuna
+            <motion.span
+              aria-hidden
+              className="absolute left-0 top-1/2 h-[6px] w-full origin-left rounded-full bg-gradient-to-r from-fuchsia-500 to-violet-500"
+              variants={{
+                hidden: { scaleX: 0 },
+                show: { scaleX: 1, transition: { delay: 0.9, duration: 0.6, ease: "easeInOut" } },
+              }}
             />
-          </motion.div>
+          </motion.span>
+          <motion.span custom={4} variants={rise} className="block mt-3 rl-grad-text">
+            È un processo.
+          </motion.span>
+        </motion.h2>
+
+        {/* ciclo animato */}
+        <div
+          className="mt-12 flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-2"
+          role="list"
+          aria-label="Il processo"
+        >
+          {STEPS.map(({ icon: Icon, label }, i) => {
+            const on = reduce || i === active;
+            return (
+              <div key={label} role="listitem" className="flex flex-col sm:flex-row items-center gap-3 sm:gap-2">
+                <motion.div
+                  animate={{ scale: on && !reduce ? 1.06 : 1, opacity: on ? 1 : 0.5 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                  className={`flex items-center gap-3 px-5 py-4 rounded-2xl border w-full sm:w-auto ${
+                    on
+                      ? "bg-viola/25 border-viola shadow-[0_0_40px_-8px_rgba(168,85,247,0.8)]"
+                      : "bg-white/5 border-white/10"
+                  }`}
+                >
+                  <span className="w-10 h-10 rounded-xl bg-viola/30 grid place-items-center">
+                    <Icon className="w-5 h-5 text-white" aria-hidden />
+                  </span>
+                  <span className="font-anton uppercase text-lg tracking-tight">{label}</span>
+                </motion.div>
+                {i < STEPS.length - 1 && (
+                  <ArrowRight
+                    aria-hidden
+                    className="w-5 h-5 text-viola rotate-90 sm:rotate-0 shrink-0"
+                  />
+                )}
+              </div>
+            );
+          })}
         </div>
+
+        <p className="mt-6 font-poppins text-white/70 text-sm uppercase tracking-[0.2em]">Ogni giorno</p>
+
+        <ul className="mt-8 flex flex-wrap justify-center gap-2">
+          {TAGS.map((t, i) => (
+            <motion.li
+              key={t}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 + i * 0.12 }}
+              className="rl-chip"
+            >
+              ✓ {t}
+            </motion.li>
+          ))}
+        </ul>
       </div>
     </section>
   );
